@@ -28,18 +28,18 @@ public class AnimationManagerTest implements ApplicationListener {
 		float h = Gdx.graphics.getHeight();
 		animator = new Animator(1,1);
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false,800,600);
+		camera.setToOrtho(false,w,h);
 		batch = new SpriteBatch();
 		
-		animator.addFrameDimesion(0, 0, 0, 117, 140);
-		anim = animator.createAnimation("data/anim.png");
+		animator.addFrameDimesion(0, 0, 0,w,h);
+		anim = animator.createAnimation("data/libgdx.png");
 		stateTime = 0;
 	}
 
 	@Override
 	public void dispose() {
 		batch.dispose();
-		texture.dispose();
+		//texture.dispose();
 	}
 
 	@Override
