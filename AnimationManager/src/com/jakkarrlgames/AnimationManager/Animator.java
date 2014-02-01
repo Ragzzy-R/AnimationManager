@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
@@ -37,14 +38,15 @@ public class Animator {
 
 	public Animation createAnimation(String pathToSpriteSheet) {
 		texture = new Texture(Gdx.files.internal(pathToSpriteSheet));
-		float x1,y1,width1,height1;
+		int x1 = 0,y1 = 0,width1 = 0,height1 = 0;
 		for(int i=0;i< (row*col);i++) {
 			x1=frameDimensions[i].x;
 			y1=frameDimensions[i].y;
 			width1=frameDimensions[i].width;
 			height1=frameDimensions[i].height;
-		frames[i] = new TextureRegion(texture,x1,y1,width1,height1);
+		frames[i] = new TextureRegion(texture,x1,y1,texture.getWidth(),texture.getHeight());
 		}
+		System.out.println(x1+"-"+y1+"-"+width1+"-"+height1);
 		animation = new Animation(0.025f,frames);
 		return animation;
 	}
@@ -56,5 +58,8 @@ public class Animator {
 		frameDimensions[frameIndex].width=width;
 		frameDimensions[frameIndex].height=height;
 		
+	}
+	public void render(SpriteBatch batch) {
+		batch.draw(frames[0], 0, 0, 200, 200);
 	}
 }

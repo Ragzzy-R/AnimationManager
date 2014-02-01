@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 public class AnimationManagerTest implements ApplicationListener {
 	private OrthographicCamera camera;
@@ -18,6 +19,9 @@ public class AnimationManagerTest implements ApplicationListener {
 	private Sprite sprite;
 	private TextureRegion currentFrame;
 	private Animator animator;
+	private Texture testTexture;
+	private Sprite testSprite;
+	Entity test;
 	private Animation anim;
 	float stateTime;
 
@@ -26,12 +30,18 @@ public class AnimationManagerTest implements ApplicationListener {
 	public void create() {		
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
-		animator = new Animator(1,1);
+		animator = new Animator(2,2);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,w,h);
 		batch = new SpriteBatch();
-		
-		animator.addFrameDimesion(0, 0, 0,w,h);
+		test = new Entity();
+		testTexture = new Texture(Gdx.files.internal("data/libgdx.png"));
+		test.getRegionFromTexture(testTexture,0	,0,testTexture.getWidth(),testTexture.getHeight());
+		testSprite = test.createSprite(new Vector2(300,300),new Vector2(100,100));
+		animator.addFrameDimesion(0, 0f, 0f,100,100);
+		animator.addFrameDimesion(1, 100f, 100f, 100, 100);
+		animator.addFrameDimesion(2, 100f, 200f, 100, 100);
+		animator.addFrameDimesion(3, 100f, 300f, 100, 100);
 		anim = animator.createAnimation("data/libgdx.png");
 		stateTime = 0;
 	}
@@ -51,7 +61,8 @@ public class AnimationManagerTest implements ApplicationListener {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(currentFrame,100,100);
-	//	sprite.draw(batch);
+		testSprite.draw(batch);
+		animator.render(batch);
 		batch.end();
 	}
 
