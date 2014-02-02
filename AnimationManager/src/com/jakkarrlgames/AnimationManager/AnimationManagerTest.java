@@ -17,7 +17,7 @@ public class AnimationManagerTest implements ApplicationListener {
 	private SpriteBatch batch;
 	private Texture texture;
 	private Sprite sprite;
-	private TextureRegion currentFrame;
+
 	private Animator animator;
 	private Texture testTexture;
 	private Sprite testSprite;
@@ -38,11 +38,11 @@ public class AnimationManagerTest implements ApplicationListener {
 		testTexture = new Texture(Gdx.files.internal("data/libgdx.png"));
 		test.getRegionFromTexture(testTexture,0	,0,testTexture.getWidth(),testTexture.getHeight());
 		testSprite = test.createSprite(new Vector2(300,300),new Vector2(100,100));
-		animator.addFrameDimesion(0, 0f, 0f,100,100);
-		animator.addFrameDimesion(1, 100f, 100f, 100, 100);
-		animator.addFrameDimesion(2, 100f, 200f, 100, 100);
-		animator.addFrameDimesion(3, 100f, 300f, 100, 100);
-		anim = animator.createAnimation("data/libgdx.png");
+		animator.addFrameDimesion(0, 0, 0, 121, 130);
+		animator.addFrameDimesion(1, 221, 0, 121, 130);
+		animator.addFrameDimesion(2, 246, 0, 121, 130);
+		animator.addFrameDimesion(3, 364, 0, 150, 130);
+		anim = animator.createAnimation("data/anim.png",.08f);
 		stateTime = 0;
 	}
 
@@ -57,12 +57,12 @@ public class AnimationManagerTest implements ApplicationListener {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		 stateTime += Gdx.graphics.getDeltaTime();
-		 currentFrame =anim.getKeyFrame(stateTime, true);
+		// currentFrame =anim.getKeyFrame(stateTime, true);
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.draw(currentFrame,100,100);
-		testSprite.draw(batch);
-		animator.render(batch);
+	//	batch.draw(currentFrame,100,100);
+		//testSprite.draw(batch);
+		animator.render(batch,100,100,stateTime);
 		batch.end();
 	}
 
