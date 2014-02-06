@@ -17,7 +17,7 @@ public class AnimationManagerTest implements ApplicationListener {
 	private SpriteBatch batch;
 	private Texture texture;
 	private Sprite sprite;
-
+	private AnimatableEntity player;
 	private Animator animator;
 	private Texture testTexture;
 	private Sprite testSprite;
@@ -31,6 +31,7 @@ public class AnimationManagerTest implements ApplicationListener {
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
 		animator = new Animator(2,2);
+		player = new AnimatableEntity(1);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,w,h);
 		batch = new SpriteBatch();
@@ -44,6 +45,8 @@ public class AnimationManagerTest implements ApplicationListener {
 		animator.addFrameDimesion(3, 364, 0, 150, 130);
 		anim = animator.createAnimation("data/anim.png",.08f);
 		stateTime = 0;
+		player.registerAnimator(animator, "walk");
+		player.setCurrentAnimator("walk");
 	}
 
 	@Override
@@ -62,7 +65,7 @@ public class AnimationManagerTest implements ApplicationListener {
 		batch.begin();
 	//	batch.draw(currentFrame,100,100);
 		//testSprite.draw(batch);
-		animator.render(batch,100,100,stateTime);
+		player.render(batch,100,100,stateTime);
 		batch.end();
 	}
 

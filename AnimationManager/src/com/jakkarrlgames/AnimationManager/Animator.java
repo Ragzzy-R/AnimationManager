@@ -39,6 +39,10 @@ public class Animator {
 
 	}
 
+	public Animator() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Animation createAnimation(String pathToSpriteSheet,float frameTransition) {
 		texture = new Texture(Gdx.files.internal(pathToSpriteSheet));
 		int x1 = 0,y1 = 0,width1 = 0,height1 = 0;
