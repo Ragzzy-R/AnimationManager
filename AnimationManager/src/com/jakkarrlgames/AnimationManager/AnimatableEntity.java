@@ -12,7 +12,7 @@ public class AnimatableEntity {
 		anim = new Animator();
 	}
 	
-	public void registerAnimator(Animator anim,String name) {
+	public void attachAnimator(Animator anim,String name) {
 		animationTable.put(name, anim);
 	}
 	public void setCurrentAnimator(String name) {
