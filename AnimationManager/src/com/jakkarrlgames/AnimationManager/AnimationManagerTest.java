@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -35,12 +37,9 @@ import com.badlogic.gdx.math.Vector2;
 public class AnimationManagerTest implements ApplicationListener {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Texture texture;
-	private Sprite sprite;
 	private AnimatableEntity player;
-	private Animator animator;
-	private Texture testTexture;
-	private Sprite testSprite;
+	private Animator walkAnimator;
+	private Animator slideAnimator;
 	Entity test;
 	private Animation anim;
 	float stateTime;
@@ -50,22 +49,31 @@ public class AnimationManagerTest implements ApplicationListener {
 	public void create() {		
 		float w = Gdx.graphics.getWidth();
 		float h = Gdx.graphics.getHeight();
-		animator = new Animator(2,2);
+		walkAnimator = new Animator(1,7);
+		slideAnimator= new Animator(1,3);
 		player = new AnimatableEntity(1);
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,w,h);
 		batch = new SpriteBatch();
 		test = new Entity();
-		testTexture = new Texture(Gdx.files.internal("data/libgdx.png"));
-		test.getRegionFromTexture(testTexture,0	,0,testTexture.getWidth(),testTexture.getHeight());
-		testSprite = test.createSprite(new Vector2(300,300),new Vector2(100,100));
-		animator.addFrameDimesion(0, 0, 0, 121, 130);
-		animator.addFrameDimesion(1, 221, 0, 121, 130);
-		animator.addFrameDimesion(2, 246, 0, 121, 130);
-		animator.addFrameDimesion(3, 364, 0, 150, 130);
-		anim = animator.createAnimation("data/anim.png",.08f);
+		//testTexture = new Texture(Gdx.files.internal("data/Wip sprite sheet.jpg"));
+		//test.getRegionFromTexture(testTexture,0	,0,testTexture.getWidth(),testTexture.getHeight());
+		//testSprite = test.createSprite(new Vector2(300,300),new Vector2(100,100));
+		walkAnimator.addFrameDimesion(0, 0,   0, 70, 64);
+		walkAnimator.addFrameDimesion(1, 82,  0, 70, 64);
+		walkAnimator.addFrameDimesion(2, 152, 0, 70, 64);
+		walkAnimator.addFrameDimesion(3, 236, 0, 70, 64);
+		walkAnimator.addFrameDimesion(4, 312, 0, 70, 64);
+		walkAnimator.addFrameDimesion(5, 382, 0, 70, 64);
+		walkAnimator.addFrameDimesion(6, 457, 0, 70, 64);
+		anim = walkAnimator.createAnimation("data/walk.png",.2f);
+		slideAnimator.addFrameDimesion(0, 0,   0, 78, 64);
+		slideAnimator.addFrameDimesion(1, 78,  0, 90, 64);
+		slideAnimator.addFrameDimesion(2, 168, 0, 90, 64);
+		slideAnimator.createAnimation("data/slide.png",.2f);
 		stateTime = 0;
-		player.attachAnimator(animator, "walk");
+		player.attachAnimator(walkAnimator, "walk");
+		player.attachAnimator(slideAnimator, "slide");
 		player.setCurrentAnimator("walk");
 	}
 
@@ -80,6 +88,12 @@ public class AnimationManagerTest implements ApplicationListener {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		 stateTime += Gdx.graphics.getDeltaTime();
+		 if(Gdx.input.isKeyPressed(Keys.SPACE)) {
+			 player.setCurrentAnimator("slide");
+		 }
+		 if(!Gdx.input.isKeyPressed(Keys.SPACE)) {
+			 player.setCurrentAnimator("walk");
+		 }
 		// currentFrame =anim.getKeyFrame(stateTime, true);
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();

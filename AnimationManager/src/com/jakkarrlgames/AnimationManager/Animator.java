@@ -46,12 +46,18 @@ public class Animator {
 	public Animation createAnimation(String pathToSpriteSheet,float frameTransition) {
 		texture = new Texture(Gdx.files.internal(pathToSpriteSheet));
 		int x1 = 0,y1 = 0,width1 = 0,height1 = 0;
-		for(int i=0;i< (row*col);i++) {
-			x1=frameDimensions[i].x;
-			y1=frameDimensions[i].y;
-			width1=frameDimensions[i].width;
-			height1=frameDimensions[i].height;
-		frames[i] = new TextureRegion(texture,x1,y1,width1,height1);
+		try {
+			for(int i=0;i< (row*col);i++) {
+				x1=frameDimensions[i].x;
+				y1=frameDimensions[i].y;
+				width1=frameDimensions[i].width;
+				height1=frameDimensions[i].height;
+				frames[i] = new TextureRegion(texture,x1,y1,width1,height1);
+			}
+		}
+		catch(NullPointerException e) {
+			System.out.println("ERROR:trying to create Animation without filling up frameDimensions.");
+			System.out.println("use addFrameDimension() or addCoOrdinates() to fill up frameDimensions");
 		}
 		System.out.println(x1+"-"+y1+"-"+width1+"-"+height1);
 		animation = new Animation(frameTransition,frames);
@@ -60,18 +66,20 @@ public class Animator {
 	/*
 	 * this is a method used to fill up the dimensions of the frame.It is always recommended to
 	 * use spritesheets instead of using separate images for an animation.Hence Animation Manager
-	 * only supports SpriteSheet Animation.A addFrameDimesion() is called once for each frame with its x,
+	 * only supports SpriteSheet Animation.A addFrameDimesion() must be called once for each frame with its x,
 	 * y,width and height.
 	 * 
 	 * Note:In case all your frames are of same width and height then call setAllFramesDimension(Vector2 dimension)  
-	 * and then )call addFrameCoOrdinates(Vector2 coOdrinates) for each frame instead.
+	 * and then call addFrameCoOrdinates(Vector2 coOdrinates) for each frame instead.
 	 * */
 	public void addFrameDimesion(int frameIndex,int x,int y,int width,int height) {
+		
 		frameDimensions[frameIndex]= new FrameDimension();
 		frameDimensions[frameIndex].x=x;
 		frameDimensions[frameIndex].y=y;
 		frameDimensions[frameIndex].width=width;
 		frameDimensions[frameIndex].height=height;
+		
 		
 	}
 	
