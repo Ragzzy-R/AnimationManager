@@ -56,9 +56,11 @@ public class AnimationManagerTest implements ApplicationListener {
 		camera.setToOrtho(false,w,h);
 		batch = new SpriteBatch();
 		test = new Entity();
-		//testTexture = new Texture(Gdx.files.internal("data/Wip sprite sheet.jpg"));
-		//test.getRegionFromTexture(testTexture,0	,0,testTexture.getWidth(),testTexture.getHeight());
-		//testSprite = test.createSprite(new Vector2(300,300),new Vector2(100,100));
+		
+		
+		/*adding frame dimensions(this is a really cumbersome task if u have a complex
+			sprite sheet.But its totally worth it.when managing animations in render().
+		*/
 		walkAnimator.addFrameDimesion(0, 0,   0, 70, 64);
 		walkAnimator.addFrameDimesion(1, 82,  0, 70, 64);
 		walkAnimator.addFrameDimesion(2, 152, 0, 70, 64);
@@ -66,12 +68,23 @@ public class AnimationManagerTest implements ApplicationListener {
 		walkAnimator.addFrameDimesion(4, 312, 0, 70, 64);
 		walkAnimator.addFrameDimesion(5, 382, 0, 70, 64);
 		walkAnimator.addFrameDimesion(6, 457, 0, 70, 64);
+		
+		/*create animation from  the spritesheet.As we have already given the co ordinates 
+			for a particular animation,just sit back and watch.Animator class will create 
+			the animation for u.
+		*/
 		anim = walkAnimator.createAnimation("data/walk.png",.2f);
+		
+		
 		slideAnimator.addFrameDimesion(0, 0,   0, 78, 64);
 		slideAnimator.addFrameDimesion(1, 78,  0, 90, 64);
 		slideAnimator.addFrameDimesion(2, 168, 0, 90, 64);
 		slideAnimator.createAnimation("data/slide.png",.2f);
+		
 		stateTime = 0;
+		/*
+		 * finally adding all animators to Animatable entity.
+		 * */
 		player.attachAnimator(walkAnimator, "walk");
 		player.attachAnimator(slideAnimator, "slide");
 		player.setCurrentAnimator("walk");
@@ -80,7 +93,6 @@ public class AnimationManagerTest implements ApplicationListener {
 	@Override
 	public void dispose() {
 		batch.dispose();
-		//texture.dispose();
 	}
 
 	@Override
@@ -88,18 +100,21 @@ public class AnimationManagerTest implements ApplicationListener {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		 stateTime += Gdx.graphics.getDeltaTime();
+		 
+		 
 		 if(Gdx.input.isKeyPressed(Keys.SPACE)) {
-			 player.setCurrentAnimator("slide");
+			 
+			 player.setCurrentAnimator("slide"); //just set current Animation of the Animatable Entity
 		 }
 		 if(!Gdx.input.isKeyPressed(Keys.SPACE)) {
-			 player.setCurrentAnimator("walk");
+			 player.setCurrentAnimator("walk");   //walk
 		 }
-		// currentFrame =anim.getKeyFrame(stateTime, true);
+
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-	//	batch.draw(currentFrame,100,100);
-		//testSprite.draw(batch);
-		player.render(batch,100,100,stateTime);
+		
+		player.render(batch,100,100,stateTime); //finally render our player :)
+		
 		batch.end();
 	}
 

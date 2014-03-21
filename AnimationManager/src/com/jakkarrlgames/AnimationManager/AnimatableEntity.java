@@ -1,5 +1,7 @@
 package com.jakkarrlgames.AnimationManager;
-
+/**
+ * this Class is used to manage all animators.(i.e)one per character.
+ */
 import java.util.Hashtable;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -11,7 +13,11 @@ public class AnimatableEntity {
 		animationTable = new Hashtable<String,Animator>(noOfAnimators);
 		anim = new Animator();
 	}
-	
+	/**
+	 * This method is used to add animators to the Animatable Entity.(i.e) walk,fight etc to character
+	 * @param anim An Animator.
+	 * @param name A string to ID animator
+	 */
 	public void attachAnimator(Animator anim,String name) {
 		animationTable.put(name, anim);
 	}

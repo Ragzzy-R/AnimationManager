@@ -16,7 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 
 /**
 * @author Raghuram Iyer
-*
+*This class is not part of animation Manager.this is just a helper class which i wrote a while ago.
 */
 public class Entity {
 
