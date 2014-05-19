@@ -29,11 +29,21 @@ public class Animator {
 	FrameDimension[] frameDimensions;
 	float stateTime;
 	int row,col;
+	int frameCount;
 	private TextureRegion currentFrame;
+	
+	
+	public Animator(int frameCount) {
+		this.frameCount= frameCount;
+		frames = new TextureRegion[row*col];
+		frameDimensions = new FrameDimension[row*col];
+	}
+
 	public Animator(int row,int col) {
 		
 		this.row = row;
 		this.col = col;
+		frameCount=row*col;
 		frames = new TextureRegion[row*col];
 		frameDimensions = new FrameDimension[row*col];
 
@@ -47,7 +57,7 @@ public class Animator {
 		texture = new Texture(Gdx.files.internal(pathToSpriteSheet));
 		int x1 = 0,y1 = 0,width1 = 0,height1 = 0;
 		try {
-			for(int i=0;i< (row*col);i++) {
+			for(int i=0;i< (frameCount);i++) {
 				x1=frameDimensions[i].x;
 				y1=frameDimensions[i].y;
 				width1=frameDimensions[i].width;
